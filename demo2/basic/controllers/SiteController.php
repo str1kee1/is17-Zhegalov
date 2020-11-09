@@ -130,9 +130,6 @@ class SiteController extends Controller
     }
 
 
-
-
-
     public function actionSignup(){
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -149,10 +146,10 @@ class SiteController extends Controller
      
         return $this->render('signup', compact('model'));
     }
+    
 
-
-   
-
+    
+    
 }
 
 
@@ -160,4 +157,18 @@ class SiteController extends Controller
 
    
 
+                        
 
+
+
+
+
+
+  
+
+
+   
+
+
+
+   

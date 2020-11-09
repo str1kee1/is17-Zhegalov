@@ -1,45 +1,33 @@
 <?php
 
 namespace app\models;
-use app\models\ActiveRecord;
-
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     public $id;
     public $username;
-    public $loggin;
-    public $email;
     public $password;
-    public $passwords;
     public $authKey;
     public $accessToken;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'adminWSR',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-     //   '101' => [
-    //        'id' => '101',
-    //        'username' => 'demo',
-     //       'password' => 'demo',
-    ////        'authKey' => 'test101key',
-    //        'accessToken' => '101-token',
-   //     ],
-        '101' => [
-            'id' => '101',
-            'username' => 'Zhegalov-Artuom-Zhegalov',
-            'login'=> 'str1kee',
-            'email' => 'le_ttr@mail.ru',
-            'password' => 'dimon',
-            'passwords' => 'dimon',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+ //   private static $users = [
+ //      '100' => [
+  //         'id' => '100',
+  ///         'username' => 'admin',
+   //         'password' => 'admin',
+    ///        'authKey' => 'test100key',
+    //        'accessToken' => '100-token',
+  //     ],
+ //   ];
+  //      '101' => [
+   //         'id' => '101',
+   //         'username' => 'demo',
+    //        'password' => 'demo',
+   //         'authKey' => 'test101key',
+  //          'accessToken' => '101-token',
+ //       ],
+ //   ];
 
 
     /**
@@ -47,7 +35,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne($id);
     }
 
     /**
@@ -72,13 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return static::findOne(['username' => $username]);
     }
 
     /**
@@ -111,19 +93,11 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $password password to validate
      * @return bool if password provided is valid for current user
      */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
-    }
+    public function validatePassword($password){
+        if(is_null($this->password)) 
+            return false;
+        return Yii::$app->getSecurity()->validatePassword($this->salt . $password, $this->password);
+    } 
 }
-
-
-
-
-
-
-
-
-
 
 

@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
-        
         'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
@@ -26,14 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
         <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($model, 'loggin') ?>
-        <?= $form->field($model, 'email') ?>
-        <?= $form->field($model, 'passwords')->passwordInput() ?>
-        <?= $form->field($model, 'password')->passwordInput() ?>
-        
-       
 
-        <?= $form->field($model, 'rememberMe')->label('Согласие на обработку данных')->checkbox([
+        <?= $form->field($model, 'password')->passwordInput() ?>
+
+        <?= $form->field($model, 'rememberMe')->checkbox([
             'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
         ]) ?>
 
@@ -46,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
     <div class="col-lg-offset-1" style="color:#999;">
-        
+        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
+        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
     </div>
 </div>
